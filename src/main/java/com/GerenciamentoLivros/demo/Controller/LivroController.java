@@ -22,7 +22,7 @@ public class LivroController {
 
     @GetMapping
     public ResponseEntity<List<LivrosModel>> findAll() {
-        List<LivrosModel> requeste = livroService.findall();
+        List<LivrosModel> requeste = livroService.findAll();
         return ResponseEntity.ok().body(requeste);
     }
 
@@ -37,8 +37,14 @@ public class LivroController {
 
     @PostMapping
     public ResponseEntity<LivrosModel> cadastroLivro(@RequestBody LivrosModel livrosModel) {
-        LivrosModel request = livrosModel.cadastroLivro(livrosModel);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(request.getId()).toUri();
+        LivrosModel request = livroService.cadastroLivro(livrosModel);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(request.getId())
+                .toUri();
+
         return ResponseEntity.created(uri).body(request);
     }
 

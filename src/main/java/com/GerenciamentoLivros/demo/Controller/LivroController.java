@@ -48,13 +48,13 @@ public class LivroController {
         return ResponseEntity.created(uri).body(request);
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         livroService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{/id}")
+    @PutMapping("/{id}")
     public ResponseEntity<LivrosModel> update(@PathVariable Long id, @RequestBody LivrosModel livrosModel) {
         LivrosModel livros = livroService.update(id, livrosModel);
         return ResponseEntity.ok().body(livros);

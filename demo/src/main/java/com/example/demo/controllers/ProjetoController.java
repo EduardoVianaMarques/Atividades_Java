@@ -3,8 +3,11 @@ package com.example.demo.controllers;
 import com.example.demo.models.ProjetoModel;
 import com.example.demo.services.ProjetoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,30 +16,41 @@ import java.util.Optional;
 public class ProjetoController {
 
     @Autowired
-    ProjetoService projetoService;
-
-    @PostMapping
-    public ProjetoModel criarProjeto(@RequestBody ProjetoModel projetoModel) {
-        return projetoService.criarProjeto(projetoModel);
-    }
+    private ProjetoService projetoService;
 
     @GetMapping
-    public List<ProjetoModel> listarProjeto() {
-        return projetoService.listarProjeto();
+    public ResponseEntity<List<ProjetoModel>> listarProjeto() {
+        List<ProjetoModel> lista = projetoService.listarProjeto();
+        return ResponseEntity.ok().body(lista);
     }
 
-    @GetMapping("/{îd}")
-    public Optional<ProjetoModel> buscarId(Long id){
+    @GetMapping("/{id}")
+    public Optional<ProjetoModel> buscarId(@PathVariable Long id){
         return projetoService.buscarId(id);
     }
 
+    @PostMapping
+    public ResponseEntity<ProjetoModel> criarProjeto(@RequestBody ProjetoModel projetoModel) {
+        ProjetoModel novo = projetoService.criarProjeto(projetoModel);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(novo.getId())
+                .toUri();
+
+        return ResponseEntity.created(uri).body(novo);
+    }
+
     @DeleteMapping("/{id}")
-    public void deletarProjeto(@PathVariable Long id){
+    public ResponseEntity<Void> deletarProjeto(@PathVariable Long id){
         projetoService.deletarProjeto(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ProjetoModel atualizarProjeto(@PathVariable Long id, @RequestBody ProjetoModel projetoModel){
-        return projetoService.atualizarProjeto(id, projetoModel);
+    public ResponseEntity<ProjetoModel> atualizarProjeto(@PathVariable Long id, @RequestBody ProjetoModel projetoModel){
+        ProjetoModel atualizado = projetoService.atualizarProjeto(id, projetoModel);
+        return ResponseEntity.ok().body(atualizado);
     }
 }

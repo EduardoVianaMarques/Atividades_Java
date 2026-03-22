@@ -36,6 +36,8 @@ public class FornecedorService {
     public FornecedorModel atualizarFornecedor(Long id, FornecedorModel fornecedorModel) {
         FornecedorModel newFornecedor = fornecedorRepository.findById(id).get();
         newFornecedor.setNomeFantasia(fornecedorModel.getNomeFantasia());
+        newFornecedor.setCnpj(fornecedorModel.getCnpj());
+        newFornecedor.setContato(fornecedorModel.getContato());
         return fornecedorRepository.save(newFornecedor);
     }
 }

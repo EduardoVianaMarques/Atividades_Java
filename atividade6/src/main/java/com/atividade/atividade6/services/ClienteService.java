@@ -36,6 +36,8 @@ public class ClienteService {
     public ClienteModel atualizarCliente(Long id, ClienteModel clienteModel) {
         ClienteModel newCliente = clienteRepository.findById(id).get();
         newCliente.setNome(clienteModel.getNome());
+        newCliente.setEmail(clienteModel.getEmail());
+        newCliente.setTelefone(clienteModel.getTelefone());
         return clienteRepository.save(newCliente);
     }
 }

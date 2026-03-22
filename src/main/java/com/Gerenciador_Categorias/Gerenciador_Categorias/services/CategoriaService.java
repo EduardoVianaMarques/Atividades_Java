@@ -29,7 +29,7 @@ public class CategoriaService {
     public void deleteById(Long id) {
         categoriaRepository.deleteById(id);
     }
-    public CategoriaModel update (Long id ,CategoriaModel categoriaModel){
+    public CategoriaModel update(Long id ,CategoriaModel categoriaModel){
         CategoriaModel newCategoria = categoriaRepository.findById(id).get();
         newCategoria.setNome(categoriaModel.getNome());
         newCategoria.setDescricao(categoriaModel.getDescricao());

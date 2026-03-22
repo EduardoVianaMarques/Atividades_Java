@@ -29,7 +29,7 @@ public class FornecedorService {
         return fornecedorRepository.findById(id);
     }
 
-    public void deletarFornecedor(Long id, FornecedorModel fornecedorModel) {
+    public void deletarFornecedor(Long id) {
         fornecedorRepository.deleteById(id);
     }
 
